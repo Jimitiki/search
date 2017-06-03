@@ -42,7 +42,7 @@ def get_new_node(init_node, point, edge_length):
 def is_valid_edge(env, node1, node2):
     (x1, y1) = node1.get_position()
     (x2, y2) = node2.get_position()
-    return env.intersects_obstacle(x1, x2, y1, y2)
+    return not env.intersects_obstacle(x1, x2, y1, y2)
 
 def build_path(end_node):
     path = []

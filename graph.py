@@ -26,9 +26,6 @@ class graph:
                 min_node = node
         return min_node
 
-    def build_graph_from_environment(self, env, width, height):
-        return
-
     def print_graph(self):
         for pos, node in self.nodes.items():
             print(str(pos))

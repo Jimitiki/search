@@ -5,7 +5,7 @@ from graph import graph, graph_node
 class a_star(graph):
     def __init__(self):
         graph.__init__(self)
-    
+
     def build_graph_from_environment(self, environment, width, height, res_x, res_y):
         x = 0
         x_step = width / res_x

@@ -38,7 +38,7 @@ from graph import graph, graph_node
 def heuristic(a, b):
     return distance([a.get_pos_x(), a.get_pos_y()], [b.get_pos_x(), b.get_pos_y()])
 
-def build_a_star_graph(graph, environment, width, height, res_x, res_y):
+def build_a_star_graph(g, environment, width, height, res_x, res_y):
     x = 0
     x_step = width / res_x
     y_step = height / res_y
@@ -46,7 +46,7 @@ def build_a_star_graph(graph, environment, width, height, res_x, res_y):
     while x < width:
         y = 0
         while y < height:
-            if not environment.intersects_obsticle_point(x, y):
+            if not environment.intersects_obstacle_point(x, y):
                 g.add_node(graph_node(x, y))
             y += y_step
         x += x_step
@@ -58,14 +58,18 @@ def build_a_star_graph(graph, environment, width, height, res_x, res_y):
             node = g.get_node(x, y)
             for (dx, dy) in delta:
                 adj_node = g.get_node(x + dx, y + dy)
-                if adj_node != None and not environment.intersects_obsticle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
+                if adj_node != None and not environment.intersects_obstacle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
                     node.add_adjacent(adj_node)
             y += y_step
         x += x_step
     
-def find_a_star_path(graph, start_x, start_y, goal_x, goal_y):
-    start = graph.get_closest(start_x, start_y)
-    goal = graph.get_closest(goal_x, goal_y)
+def find_a_star_path(environment, width, height, res_x, res_y):
+    g = graph()
+    build_a_star_graph(g, environment, width, height, res_x, res_y)
+    (start_x, start_y) = environment.get_start()
+    (goal_x, goal_y) = environment.get_goal()
+    start = g.get_closest(start_x, start_y)
+    goal = g.get_closest(goal_x, goal_y)
     closedSet = set()
     openSet = set([start])
     cameFrom = {}
@@ -102,10 +106,7 @@ def reconstruct_path(cameFrom, current):
     while current in cameFrom.keys():
         current = cameFrom[current]
         total_path.append(current.get_position())
+    total_path.reverse()
     return total_path
 
-g = graph()
-build_a_star_graph(g, environment(None, None), 10, 10, 5, 5)
-g.print_graph()
-
-print(find_a_star_path(g, 0, 0, 8, 8))
+print(find_a_star_path(environment((0, 0), (8, 8)), 10, 10, 5, 5))

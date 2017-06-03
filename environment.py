@@ -50,8 +50,12 @@ class tag_obstacle:
     def __init__(self, rect):
         self.rect = rect
 
-    def intersects(self, rect):
-        return poly_intersection(self.rect, rect)
+    #def intersects(self, rect):
+    def intersects(self, line):
+        return (intersect(line[0], line[1], rect[0], rect[1])
+            and intersect(line[0], line[1], rect[1], rect[2])
+            and intersect(line[0], line[1], rect[2], rect[3])
+            and intersect(line[0], line[1], rect[3], rect[0])
 
     def contains(self, x, y):
         return point_in_polygon((x, y), self.rect)

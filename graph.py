@@ -47,7 +47,7 @@ class graph_node:
         self.adjacent = []
 
     def __eq__(self, other):
-        return self.pos_x == other.pos_x and self.pos_y == other.pos_y
+        return other != None and self.pos_x == other.pos_x and self.pos_y == other.pos_y
     
     def __hash__(self):
         return hash((self.pos_x, self.pos_y))

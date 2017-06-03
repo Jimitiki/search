@@ -19,7 +19,7 @@ class graph:
     def get_closest(self, pos_x, pos_y):
         min_node = None
         min_distance = float('inf')
-        for (pos, node) in self.nodes:
+        for pos, node in self.nodes.items():
             d = distance((pos_x, pos_y), pos)
             if d < min_distance:
                 min_distance = d
@@ -41,6 +41,12 @@ class graph_node:
         self.pos_y = pos_y
         self.adjacent = []
 
+    def __eq__(self, other):
+        return self.pos_x == other.pos_x and self.pos_y == other.pos_y
+    
+    def __hash__(self):
+        return hash((self.pos_x, self.pos_y))
+                
     def get_pos_x(self):
         return self.pos_x
 

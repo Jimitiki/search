@@ -5,7 +5,6 @@ class graph:
 
     def __init__(self):
         self.nodes = {}
-        self.path = []
 
     def add_node(self, node):
         self.nodes[(node.get_pos_x(), node.get_pos_y())] = node

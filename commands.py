@@ -11,7 +11,7 @@ def open_connection(address):
 
 def send_command(command):
     global s
-    s.send(command)
+    s.send(bytearray(command))
     res = s.recv(2048)
     if res == None:
         return None

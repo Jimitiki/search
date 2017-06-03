@@ -60,6 +60,7 @@ class tag_obstacle:
             and approx_intersect(line2, self.rect)
             and approx_intersect(line3, self.rect))
 
+<<<<<<< HEAD
     def contains(self, x, y):
         return point_in_polygon((x, y), self.rect)
 

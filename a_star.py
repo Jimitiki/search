@@ -56,16 +56,19 @@ def build_a_star_graph(g, environment, res_x, res_y):
         y = 0
         while y < environment.height:
             node = g.get_node(x, y)
-            for (dx, dy) in delta:
-                adj_node = g.get_node(x + dx, y + dy)
-                if adj_node != None and not environment.intersects_obstacle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
-                    node.add_adjacent(adj_node)
+            if node != None:
+                for (dx, dy) in delta:
+                    adj_node = g.get_node(x + dx, y + dy)
+                    if adj_node != None and not environment.intersects_obstacle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
+                        node.add_adjacent(adj_node)
             y += y_step
         x += x_step
     
 def find_a_star_path(environment, res_x, res_y):
     g = graph()
     build_a_star_graph(g, environment, res_x, res_y)
+
+    g.show_graph(2000, 2000)
     (start_x, start_y) = environment.get_start()
     (goal_x, goal_y) = environment.get_goal()
     start = g.get_closest(start_x, start_y)

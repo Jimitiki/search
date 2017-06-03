@@ -23,7 +23,7 @@ for marker_number in markers:
     env.add_obstacle(tag_obstacle(markers[marker_number]["corners"]))
 
 if sys.argv[1] == "-astar":
-    path = a_star.find_a_star_path(env, 1600, 1000, 200, 200)
+    path = a_star.find_a_star_path(env, 50, 50)
 elif sys.argv[1] == "-rrt":
     path = rrt.solve(env, 300)
 else:

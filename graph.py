@@ -37,7 +37,8 @@ class graph:
         plt.xlim([0, width])
         for pos, node in self.nodes.items():
             for adj in node.adjacent:
-                plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
+                #plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
+                plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1])
         plt.show()
         
 class graph_node:
@@ -47,7 +48,7 @@ class graph_node:
         self.adjacent = []
 
     def __eq__(self, other):
-        return self.pos_x == other.pos_x and self.pos_y == other.pos_y
+        return other != None and self.pos_x == other.pos_x and self.pos_y == other.pos_y
     
     def __hash__(self):
         return hash((self.pos_x, self.pos_y))

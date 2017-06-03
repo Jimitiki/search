@@ -109,13 +109,13 @@ def reconstruct_path(cameFrom, current):
     total_path.reverse()
     return total_path
 
-from graph import draw_path
-draw_path(find_a_star_path(environment((0, 0), (8, 8), 10, 10), 5, 5), 10, 10)
-
-g = graph()
-build_a_star_graph(g, environment(10, 10, 10, 10), 5, 5);
-g.show_graph(10, 10)
-g.print_graph()
+#from graph import draw_path
+#draw_path(find_a_star_path(environment((0, 0), (8, 8), 10, 10), 5, 5), 10, 10)
+#
+#g = graph()
+#build_a_star_graph(g, environment(10, 10, 10, 10), 5, 5);
+#g.show_graph(10, 10)
+#g.print_graph()
 
 #g = graph()
 #n = graph_node(0, 0)

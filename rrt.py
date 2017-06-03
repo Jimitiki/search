@@ -55,4 +55,4 @@ def build_path(self, end_node):
     while len(cur_node.adjacent) > 0:
         path.insert(0, cur_node.get_position())
         cur_node = cur_node.adjacent[0]
-    return path[]
+    return path

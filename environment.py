@@ -43,17 +43,14 @@ def poly_intersection(poly1, poly2):
     return False
 
 class tag_obstacle:
-    def __init__(self, top_left, top_right, bottom_left, bottom_right):
-        self.top_left = top_left
-        self.top_right = top_right
-        self.bottom_left = bottom_left
-        self.bottom_right = bottom_right
+    def __init__(self, rect):
+        self.rect = rect
 
-    def intersects(rect):
-        return False
+    def intersects(self, rect):
+        return poly_intersection(self.rect, rect)
 
-    def contains(x, y):
-        return False
+    def contains(self, x, y):
+        return point_in_polygon((x, y), self.rect)
 
 class environment:
     def __init__(self, start, goal, height, width):

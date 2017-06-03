@@ -60,6 +60,9 @@ class graph_node:
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.adjacent = []
+        
+    def __eq__(self, other):
+        return self.pos_x == other.pos_x and self.pos_y == other.pos_y
                 
     def get_pos_x(self):
         return self.pos_x        
@@ -69,6 +72,24 @@ class graph_node:
     
     def add_adjacent(self, adj_node):    
         self.adjacent.append(adj_node)                
+        
+def heuristic(a, b):
+    return distance([a.get_pos_x(), a.get_pos_y()], [b.get_pos_x(), b.get_pos_y()])
+    
+def find_a_star_path(graph, start_x, start_y, goal_x, goal_y):
+    start = graph.get_closest(start_x, start_y)
+    goal = graph.get_closest(goal_x, goal_y)
+    closedSet = set()
+    openSet = {start}
+    cameFrom = {}
+    
+    gScore = {}
+    gScore[start] = 0
+    fScore = {}
+    fScore[start] = heuristic(start, end)
+    
+    while len(openSet) > 0:
+        current = min()
 
 g = graph()
 g.build_graph_from_environment(environment(), 10, 10, 5, 5)

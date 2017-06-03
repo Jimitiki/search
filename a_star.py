@@ -38,23 +38,23 @@ from graph import graph, graph_node
 def heuristic(a, b):
     return distance([a.get_pos_x(), a.get_pos_y()], [b.get_pos_x(), b.get_pos_y()])
 
-def build_a_star_graph(g, environment, width, height, res_x, res_y):
+def build_a_star_graph(g, environment, res_x, res_y):
     x = 0
-    x_step = width / res_x
-    y_step = height / res_y
+    x_step = environment.width / res_x
+    y_step = environment.height / res_y
     delta = [(-x_step, 0), (-x_step, -y_step), (0, -y_step), (x_step, -y_step), (x_step, 0), (x_step, y_step), (0, y_step), (-x_step, y_step)]
-    while x < width:
+    while x < environment.width:
         y = 0
-        while y < height:
+        while y < environment.height:
             if not environment.intersects_obstacle_point(x, y):
                 g.add_node(graph_node(x, y))
             y += y_step
         x += x_step
     
     x = 0
-    while x < width:
+    while x < environment.width:
         y = 0
-        while y < height:
+        while y < environment.height:
             node = g.get_node(x, y)
             for (dx, dy) in delta:
                 adj_node = g.get_node(x + dx, y + dy)
@@ -63,9 +63,9 @@ def build_a_star_graph(g, environment, width, height, res_x, res_y):
             y += y_step
         x += x_step
     
-def find_a_star_path(environment, width, height, res_x, res_y):
+def find_a_star_path(environment, res_x, res_y):
     g = graph()
-    build_a_star_graph(g, environment, width, height, res_x, res_y)
+    build_a_star_graph(g, environment, res_x, res_y)
     (start_x, start_y) = environment.get_start()
     (goal_x, goal_y) = environment.get_goal()
     start = g.get_closest(start_x, start_y)
@@ -109,4 +109,20 @@ def reconstruct_path(cameFrom, current):
     total_path.reverse()
     return total_path
 
-print(find_a_star_path(environment((0, 0), (8, 8)), 10, 10, 5, 5))
+#from graph import draw_path
+#draw_path(find_a_star_path(environment((0, 0), (8, 8), 10, 10), 5, 5), 10, 10)
+#
+#g = graph()
+#build_a_star_graph(g, environment(10, 10, 10, 10), 5, 5);
+#g.show_graph(10, 10)
+#g.print_graph()
+
+#g = graph()
+#n = graph_node(0, 0)
+#n2 = graph_node(1, 1)
+#n.add_adjacent(n2)
+#g.add_node(n)
+#g.add_node(n2)
+#
+#g.show_graph(2, 2)
+#g.print_graph()

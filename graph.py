@@ -1,5 +1,6 @@
 from mathutils import distance
 from environment import environment
+import matplotlib.pyplot as plt
 
 class graph:
 
@@ -30,7 +31,15 @@ class graph:
             print(str(pos))
             for adj in node.adjacent:
                 print('  ' + str((adj.pos_x, adj.pos_y)))
-
+    
+    def show_graph(self, width, height):
+        plt.ylim([0, height])
+        plt.xlim([0, width])
+        for pos, node in self.nodes.items():
+            for adj in node.adjacent:
+                plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
+        plt.show()
+        
 class graph_node:
     def __init__(self, pos_x, pos_y):
         self.pos_x = pos_x
@@ -54,3 +63,10 @@ class graph_node:
 
     def add_adjacent(self, adj_node):
         self.adjacent.append(adj_node)
+
+def draw_path(path, width, height):
+    plt.ylim([0, height])
+    plt.xlim([0, width])
+    for i in range(0, len(path) - 1):
+        plt.arrow(path[i][0], path[i][1], path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1], head_width = width / 40.0, head_length = width / 40.0)
+    plt.show()

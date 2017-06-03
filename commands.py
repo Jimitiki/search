@@ -11,8 +11,8 @@ def open_connection(address):
 
 def send_command(command):
     global s
-    s.send(command)
-    res = s.recv(4096)
+    s.send(command.encode('utf-8'))
+    res = s.recv(2048)
     if res == None:
         return None
     return json.loads(res)

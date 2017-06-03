@@ -54,8 +54,8 @@ def build_rect_from_line(p1, p2, w):
     print(v2)
 
     r1 = move_point_along_vector(p1, v1, w / 2)
-    r2 = move_point_along_vector(p1, v2, w / 2)
-    r3 = move_point_along_vector(p2, v1, w / 2)
-    r4 = move_point_along_vector(p2, v2, w / 2)
+    r2 = move_point_along_vector(p2, v1, w / 2)
+    r3 = move_point_along_vector(p2, v2, w / 2)
+    r4 = move_point_along_vector(p1, v2, w / 2)
 
     return (r1, r2, r3, r4)

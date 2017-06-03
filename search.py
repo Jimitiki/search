@@ -5,7 +5,8 @@ import a_star
 import sys
 
 def get_obstacle_from_marker(marker):
-
+    corners = marker["corners"]
+    return tag_obstacle(corners[0], corners[1], corners[2], corners[3])
 
 ADDRESS = ("0.0.0.0", 55555)
 
@@ -19,7 +20,5 @@ env = environment(start_pos, end_pos)
 
 for marker_number in markers:
     env.add_obstacle(get_obstacle_from_marker(markers[marker_number]))
-
-search_method = rrt.rrt() if sys.argv[1] == "rrt" else a_star.a_star()
 
 commands.close_connection()

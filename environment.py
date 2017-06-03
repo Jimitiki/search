@@ -1,16 +1,56 @@
+def ccw(A,B,C):
+    return (C[1]-A[1]) * (B[0]-A[0]) > (B[1]-A[1]) * (C[0]-A[0])
+
+def intersect(A,B,C,D):
+    return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
+
+def point_in_polygon(pt, poly):
+    result = False
+    for i in range(len(poly)-1):
+        if intersect((poly[i][0], poly[i][1]), ( poly[i+1][0], poly[i+1][1]), (pt[0], pt[1]), (float('inf'), pt[1])):
+            result = not result
+    if intersect((poly[-1][0], poly[-1][1]), (poly[0][0], poly[0][1]), (pt[0], pt[1]), (float('inf'), pt[1])):
+        result = not result
+    return result
+
+def line_intersection(line1, line2):
+    xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
+    ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
+
+    def det(a, b):
+        return a[0] * b[1] - a[1] * b[0]
+
+    div = det(xdiff, ydiff)
+    if div == 0:
+        return None
+
+    d = (det(*line1), det(*line2))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
+    return x, y
+
+def poly_intersection(poly1, poly2):
+
+    for i, p1_first_point in enumerate(poly1[:-1]):
+        p1_second_point = poly1[i + 1]
+
+        for j, p2_first_point in enumerate(poly2[:-1]):
+            p2_second_point = poly2[j + 1]
+
+            if line_intersection((p1_first_point, p1_second_point), (p2_first_point, p2_second_point)):
+                return True
+
+    return False
 
 class tag_obstacle:
-    def __init__(self, top_left, top_right, bottom_left, bottom_right):
-        self.top_left = top_left
-        self.top_right = top_right
-        self.bottom_left = bottom_left
-        self.bottom_right = bottom_right
+    def __init__(self, rect):
+        self.rect = rect
 
-    def intersects(rect):
-        return False
+    def intersects(self, rect):
+        return poly_intersection(self.rect, rect)
 
-    def contains(x, y):
-        return False
+    def contains(self, x, y):
+        return point_in_polygon((x, y), self.rect)
 
 class environment:
     def __init__(self, start, goal, height, width):

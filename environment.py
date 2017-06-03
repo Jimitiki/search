@@ -52,10 +52,10 @@ class tag_obstacle:
 
     #def intersects(self, rect):
     def intersects(self, line):
-        return (intersect(line[0], line[1], rect[0], rect[1])
-            and intersect(line[0], line[1], rect[1], rect[2])
-            and intersect(line[0], line[1], rect[2], rect[3])
-            and intersect(line[0], line[1], rect[3], rect[0])
+        return (intersect(line[0], line[1], self.rect[0], self.rect[1])
+            and intersect(line[0], line[1], self.rect[1], self.rect[2])
+            and intersect(line[0], line[1], self.rect[2], self.rect[3])
+            and intersect(line[0], line[1], self.rect[3], self.rect[0]))
 
     def contains(self, x, y):
         return point_in_polygon((x, y), self.rect)

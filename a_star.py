@@ -59,8 +59,7 @@ def build_a_star_graph(g, environment, res_x, res_y):
             if node != None:
                 for (dx, dy) in delta:
                     adj_node = g.get_node(x + dx, y + dy)
-                    #if adj_node != None and not environment.intersects_obstacle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
-                    if adj_node != None:
+                    if adj_node != None and not environment.intersects_obstacle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
                         node.add_adjacent(adj_node)
             y += y_step
         x += x_step

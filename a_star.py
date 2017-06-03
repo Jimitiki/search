@@ -1,29 +1,11 @@
 from mathutils import distance
 from environment import environment
+from graph import graph, graph_node
 
-class graph:
+class a_star(graph):
     def __init__(self):
-        self.nodes = {}
-        
-    def add_node(self, node):
-        self.nodes[(node.get_pos_x(), node.get_pos_y())] = node
-        
-    def get_node(self, pos_x, pos_y):
-        try:
-            return self.nodes[(pos_x, pos_y)]
-        except:
-            return None
-        
-    def get_closest(self, pos_x, pos_y):
-        min_node = None
-        min_distance = float('inf')
-        for (pos, node) in self.nodes:
-            d = distance((pos_x, pos_y), pos)
-            if d < min_distance:
-                min_distance = d
-                min_node = node
-        return min_node
-    
+        graph.__init__(self)
+
     def build_graph_from_environment(self, environment, width, height, res_x, res_y):
         x = 0
         x_step = width / res_x
@@ -48,49 +30,7 @@ class graph:
                         node.add_adjacent(adj_node)
                 y += y_step
             x += x_step
-        
-    def print_graph(self):
-        for pos, node in self.nodes.items():
-            print(str(pos))
-            for adj in node.adjacent:
-                print('  ' + str((adj.pos_x, adj.pos_y)))
 
-class graph_node:
-    def __init__(self, pos_x, pos_y):
-        self.pos_x = pos_x
-        self.pos_y = pos_y
-        self.adjacent = []
-        
-    def __eq__(self, other):
-        return self.pos_x == other.pos_x and self.pos_y == other.pos_y
-                
-    def get_pos_x(self):
-        return self.pos_x        
-    
-    def get_pos_y(self):
-        return self.pos_y        
-    
-    def add_adjacent(self, adj_node):    
-        self.adjacent.append(adj_node)                
-        
-def heuristic(a, b):
-    return distance([a.get_pos_x(), a.get_pos_y()], [b.get_pos_x(), b.get_pos_y()])
-    
-def find_a_star_path(graph, start_x, start_y, goal_x, goal_y):
-    start = graph.get_closest(start_x, start_y)
-    goal = graph.get_closest(goal_x, goal_y)
-    closedSet = set()
-    openSet = {start}
-    cameFrom = {}
-    
-    gScore = {}
-    gScore[start] = 0
-    fScore = {}
-    fScore[start] = heuristic(start, end)
-    
-    while len(openSet) > 0:
-        current = min()
-
-g = graph()
-g.build_graph_from_environment(environment(), 10, 10, 5, 5)
+g = a_star()
+g.build_graph_from_environment(environment((0, 0),(10, 10)), 10, 10, 5, 5)
 g.print_graph()

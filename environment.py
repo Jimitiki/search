@@ -1,5 +1,5 @@
 
-class tag_obsticle:
+class tag_obstacle:
     def __init__(self, top_left, top_right, bottom_left, bottom_right):
         self.top_left = top_left
         self.top_right = top_right
@@ -8,7 +8,7 @@ class tag_obsticle:
 
 class environment:
     def __init__(self, start, goal):
-        self.obsticles = []
+        self.obstacles = []
         self.start = start
         self.goal = goal
 
@@ -18,17 +18,17 @@ class environment:
     def get_goal(self):
         return self.goal
 
-    def add_obsticle(self, obsticle):
-        self.obsticles += obsticle
+    def add_obstacle(self, obsticle):
+        self.obstacles += obsticle
 
-    def intersects_obsticle_point(self, pos_x, pos_y):
-        for obsticle in self.obsticles:
-            if obsticle.contains(pos_x, pos_y):
+    def intersects_obstacle_point(self, pos_x, pos_y):
+        for obstacle in self.obstacles:
+            if obstacle.contains(pos_x, pos_y):
                 return True
         return False
 
-    def intersects_obsticle(self, start_x, start_y, end_x, end_y):
-        for obsticle in self.obsticles:
-            if obsticle.intersects(start_x, start_y, end_x, end_y):
+    def intersects_obstacle(self, start_x, start_y, end_x, end_y):
+        for obstacle in self.obstacles:
+            if obstacle.intersects(start_x, start_y, end_x, end_y):
                 return True
         return False

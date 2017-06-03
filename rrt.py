@@ -21,6 +21,7 @@ def solve(env, edge_length):
                 is_complete = True
                 end_node = graph_node(goal[0], goal[1])
                 end_node.add_adjacent(new_node)
+    tree.show_graph(2000, 2000)
     return build_path(end_node)
 
 def generate_point(width, height):

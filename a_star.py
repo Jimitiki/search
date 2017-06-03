@@ -29,7 +29,7 @@ class a_star(graph):
                     if adj_node != None and not environment.intersects_obsticle(x, y, adj_node.get_pos_x(), adj_node.get_pos_y()):
                         node.add_adjacent(adj_node)
                 y += y_step
-            x += x_step   
+            x += x_step
 
 g = a_star()
 g.build_graph_from_environment(environment((0, 0),(10, 10)), 10, 10, 5, 5)

@@ -44,16 +44,21 @@ def poly_intersection(poly1, poly2):
 
     return False
 
+def approx_intersect(line, rect):
+    return (intersect(line[0], line[1], rect[0], rect[1])
+        and intersect(line[0], line[1], rect[1], rect[2])
+        and intersect(line[0], line[1], rect[2], rect[3])
+        and intersect(line[0], line[1], rect[3], rect[0])
+
 class tag_obstacle:
     def __init__(self, rect):
         self.rect = rect
 
     #def intersects(self, rect):
-    def intersects(self, line):
-        return (intersect(line[0], line[1], rect[0], rect[1])
-            and intersect(line[0], line[1], rect[1], rect[2])
-            and intersect(line[0], line[1], rect[2], rect[3])
-            and intersect(line[0], line[1], rect[3], rect[0])
+    def intersects(self, line1, line2, line3):
+        return (approx_intersect(line1, self.rect)
+            and approx_intersect(line2, self.rect)
+            and approx_intersect(line3, self.rect))
 
     def contains(self, x, y):
         return point_in_polygon((x, y), self.rect)
@@ -85,8 +90,8 @@ class environment:
         return False
 
     def intersects_obstacle(self, start_x, start_y, end_x, end_y):
-        rect = mathutils.build_rect_from_line((start_x, start_y), (end_x, end_y), 100)
+        rect = mathutils.build_rect_from_line((start_x, start_y), (end_x, end_y), 40)
         for obstacle in self.obstacles:
-            if obstacle.intersects(rect):
+            if obstacle.intersects([(start_x, start_y), (end_x, end_y)],[rect[0], rect[1]], [rect[2], rect[3]]):
                 return True
         return False

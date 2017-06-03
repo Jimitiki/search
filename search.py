@@ -21,4 +21,8 @@ env = environment(start_pos, end_pos)
 for marker_number in markers:
     env.add_obstacle(get_obstacle_from_marker(markers[marker_number]))
 
+path = a_star.find_a_star_path(env, 1920, 1080, 100, 100) if sys.argv[1] == "a*" else rrt.solve(env, 200)
+
+print(path)
+
 commands.close_connection()

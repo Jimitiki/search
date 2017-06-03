@@ -1,3 +1,5 @@
+import mathutils
+
 def ccw(A,B,C):
     return (C[1]-A[1]) * (B[0]-A[0]) > (B[1]-A[1]) * (C[0]-A[0])
 
@@ -70,7 +72,7 @@ class environment:
         return (self.width, self.height)
 
     def add_obstacle(self, obstacle):
-        self.obstacles += obstacle
+        self.obstacles.append(obstacle)
 
     def intersects_obstacle_point(self, pos_x, pos_y):
         for obstacle in self.obstacles:
@@ -80,7 +82,6 @@ class environment:
 
     def intersects_obstacle(self, start_x, start_y, end_x, end_y):
         rect = mathutils.build_rect_from_line((start_x, start_y), (end_x, end_y), 100)
-        print(rect)
         for obstacle in self.obstacles:
             if obstacle.intersects(rect):
                 return True

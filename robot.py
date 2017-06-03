@@ -1,5 +1,4 @@
 import commands
-import fields
 import socket
 import math
 import mathutils
@@ -15,8 +14,7 @@ def follow_vector(vec_x, vec_y, goal_pos):
     where = commands.where_robot()
     position = where["center"]
     distance = mathutils.distance(position, goal_pos)
-    print(distance)
-    if (distance < 80):
+    if (distance < 60):
         commands.set_speed(0, 0)
         return True
     orientation = where["orientation"]

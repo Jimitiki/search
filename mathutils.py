@@ -29,7 +29,6 @@ def signed_angle(u, v):
 def distance(p1, p2):
     dx = p1[0] - p2[0]
     dy = p1[1] - p2[1]
-    print(dx, dy)
     return math.sqrt(dx * dx + dy * dy)
 
 #displaces the given point p1 towards point p2 by magnitude m and returns the resulting point
@@ -39,8 +38,6 @@ def move_point_towards_point(p1, p2, m):
 #displaces the given point p1 towards point p2 by magnitude m and returns the resulting point
 def move_point_along_vector(p, v, m):
     n_vector = normalize(v[0], v[1])
-    print(p)
-    print(n_vector)
     return (p[0] + n_vector[0] * m, p[1] + n_vector[1] * m)
 
 def orthoganalize_2D(v, ccw):
@@ -49,13 +46,12 @@ def orthoganalize_2D(v, ccw):
 def build_rect_from_line(p1, p2, w):
     vector = (p1[0] - p2[0], p1[1] - p2[1])
     v1 = orthoganalize_2D(vector, True)
-    print(v1)
     v2 = orthoganalize_2D(vector, False)
-    print(v2)
 
     r1 = move_point_along_vector(p1, v1, w / 2)
     r2 = move_point_along_vector(p2, v1, w / 2)
     r3 = move_point_along_vector(p2, v2, w / 2)
     r4 = move_point_along_vector(p1, v2, w / 2)
+    print(r1, r2, r3, r4)
 
     return (r1, r2, r3, r4)

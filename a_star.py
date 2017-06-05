@@ -1,6 +1,7 @@
 from mathutils import distance
 from environment import environment
 from graph import graph, graph_node
+import plotutils
 
 #class a_star(graph):
 #    def __init__(self):
@@ -68,7 +69,6 @@ def find_a_star_path(environment, res_x, res_y):
     g = graph()
     build_a_star_graph(g, environment, res_x, res_y)
 
-    g.show_graph(2000, 2000)
     (start_x, start_y) = environment.get_start()
     (goal_x, goal_y) = environment.get_goal()
     start = g.get_closest(start_x, start_y)
@@ -85,7 +85,9 @@ def find_a_star_path(environment, res_x, res_y):
     while len(openSet) > 0:
         current = min(openSet, key = lambda n: fScore[n])
         if current == goal:
-            return reconstruct_path(cameFrom, current)
+            path = reconstruct_path(cameFrom, current)
+            plotutils.plot_solution(path, g, environment)
+            return path#reconstruct_path(cameFrom, current)
         
         openSet.remove(current)
         closedSet.add(current)

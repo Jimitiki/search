@@ -1,6 +1,7 @@
 import random
 import mathutils
 from graph import graph, graph_node
+import plotutils
 
 def solve(env, edge_length):
     tree = graph()
@@ -21,8 +22,10 @@ def solve(env, edge_length):
                 is_complete = True
                 end_node = graph_node(goal[0], goal[1])
                 end_node.add_adjacent(new_node)
-    tree.show_graph(2000, 2000)
-    return build_path(end_node)
+    path = build_path(end_node)
+    build_path(end_node)
+    plotutils.plot_solution(path, tree, env)
+    return path#build_path(end_node)
 
 def generate_point(width, height):
     x = random.random() * width

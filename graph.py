@@ -16,6 +16,9 @@ class graph:
         except:
             return None
 
+    def get_nodes(self):
+        return self.nodes
+
     def get_closest(self, pos_x, pos_y):
         min_node = None
         min_distance = float('inf')
@@ -31,19 +34,6 @@ class graph:
             print(str(pos))
             for adj in node.adjacent:
                 print('  ' + str((adj.pos_x, adj.pos_y)))
-    
-    def show_graph(self, width, height):
-        plt.ylim([0, height])
-        plt.xlim([0, width])
-        for pos, node in self.nodes.items():
-            #reflect about y = 800
-            offset_pos_y = 1000 - pos[1]
-            for adj in node.adjacent:
-                dx = adj.get_pos_x() - pos[0]
-                dy = 1000 - adj.get_pos_y() - offset_pos_y
-                #plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
-                plt.arrow(pos[0], offset_pos_y, dx, dy)
-        plt.show()
         
 class graph_node:
     def __init__(self, pos_x, pos_y):
@@ -68,10 +58,3 @@ class graph_node:
 
     def add_adjacent(self, adj_node):
         self.adjacent.append(adj_node)
-
-def draw_path(path, width, height):
-    plt.ylim([0, height])
-    plt.xlim([0, width])
-    for i in range(0, len(path) - 1):
-        plt.arrow(path[i][0], path[i][1], path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1], head_width = width / 40.0, head_length = width / 40.0)
-    plt.show()

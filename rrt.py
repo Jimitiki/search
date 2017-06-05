@@ -12,7 +12,7 @@ def solve(env, edge_length):
     end_node = None
     is_complete = False
     while not is_complete:
-        point = generate_point(width, height)
+        point = generate_point(width, height, 100)
         neighbor = tree.get_closest(point[0], point[1])
         new_node = get_new_node(neighbor, point, edge_length)
         if is_valid_edge(env, new_node, neighbor):
@@ -27,18 +27,15 @@ def solve(env, edge_length):
     plotutils.plot_solution(path, tree, env)
     return path#build_path(end_node)
 
-def generate_point(width, height):
-    x = random.random() * width
-    y = random.random() * height
-    return (x, y)
+def generate_point(width, height, margin):
+    x = random.random() * (width - 2 * margin)
+    y = random.random() * (height - 2 * margin)
+    return (x + margin, y + margin)
 
 def get_new_node(init_node, point, edge_length):
     node_pos = init_node.get_position()
     if mathutils.distance(node_pos, point) >= edge_length:
-        #normalize vector difference
-        diff_vector = mathutils.normalize(node_pos[0] - point[0], node_pos[1] - point[1])
-        #add normalized vector * edge_length to original node
-        new_position = (node_pos[0] + diff_vector[0] * edge_length, node_pos[1] + diff_vector[1] * edge_length)
+        new_position = mathutils.move_point_towards_point(node_pos, point, edge_length)
         return graph_node(new_position[0], new_position[1])
 
     return graph_node(point[0], point[1])
@@ -46,7 +43,7 @@ def get_new_node(init_node, point, edge_length):
 def is_valid_edge(env, node1, node2):
     (x1, y1) = node1.get_position()
     (x2, y2) = node2.get_position()
-    return not env.intersects_obstacle(x1, y1, x2, y2)
+    return not env.intersects_obstacle_point(x1, y1) and not env.intersects_obstacle(x1, y1, x2, y2)
 
 def build_path(end_node):
     path = []

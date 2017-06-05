@@ -36,10 +36,10 @@ def distance(p1, p2):
 
 #displaces the given point p1 towards point p2 by magnitude m and returns the resulting point
 def move_point_towards_point(p1, p2, m):
-    return move_point_along_vector(p1, (p1[0] - p2[0], p1[1] - p2[1]), m)
+    return move_point_along_vector(p1, (p2[0] - p1[0], p2[1] - p1[1]), m)
 
 def move_point_away_from_point(p1, p2, m):
-    return move_point_along_vector(p1, (-p1[0] + p2[0], -p1[1] + p2[1]), m)
+    return move_point_along_vector(p1, (p1[0] - p2[0], p1[1] - p2[1]), m)
 
 #displaces the given point p1 towards point p2 by magnitude m and returns the resulting point
 def move_point_along_vector(p, v, m):
@@ -66,3 +66,19 @@ def rotate_vector_45(v):
 
 def rotate_vector_180(v):
     return (-v[0], -v[1])
+
+def line_intersect_test(p1, p2, p3, p4):
+    if (max(p1[0], p2[0]) < min(p3[0], p4[0])
+            or max(p3[0], p4[0]) < min(p1[0], p2[0])
+            or max(p1[1], p2[1]) < min(p3[1], p4[1])
+            or max(p3[1], p4[1]) < min(p1[1], p2[1])):
+        return False
+    if (area(p1, p2, p3) > 0 and area(p1, p2, p4) < 0
+            or area(p1, p2, p4) > 0 and area(p1, p2, p3) < 0):
+        return True
+    return False
+
+def area(p1, p2, p3):
+    return (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p3[0] - p1[0]) * (p2[1] - p1[1])
+
+print(line_intersect_test((300, 124), (200, 186),(238, 262), (238, 131)))

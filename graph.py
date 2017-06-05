@@ -36,9 +36,13 @@ class graph:
         plt.ylim([0, height])
         plt.xlim([0, width])
         for pos, node in self.nodes.items():
+            #reflect about y = 800
+            offset_pos_y = 1000 - pos[1]
             for adj in node.adjacent:
+                dx = adj.get_pos_x() - pos[0]
+                dy = 1000 - adj.get_pos_y() - offset_pos_y
                 #plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
-                plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1])
+                plt.arrow(pos[0], offset_pos_y, dx, dy)
         plt.show()
         
 class graph_node:

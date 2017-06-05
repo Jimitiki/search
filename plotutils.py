@@ -31,7 +31,6 @@ def draw_square_from_center(center, size, color, height):
     p2 = (center[0] + size, center[1] - size)
     p3 = (center[0] + size, center[1] + size)
     p4 = (center[0] - size, center[1] + size)
-    print(p1, p2, p3, p4)
     draw_square_from_vertices(p1, p2, p3, p4, color, height)
 
 def draw_square_from_vertices(p1, p2, p3, p4, color, height):

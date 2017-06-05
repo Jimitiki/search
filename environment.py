@@ -46,7 +46,7 @@ def poly_intersection(poly1, poly2):
 
 class tag_obstacle:
     def __init__(self, marker):
-        SIZE_INCREASE = 50
+        SIZE_INCREASE = 60
         vector = marker["orientation"]
         corners = marker["corners"]
         center = marker["center"]
@@ -102,4 +102,4 @@ class environment:
         for obstacle in self.obstacles:
             if obstacle.intersects([(start_x, start_y), (end_x, end_y)]):
                 return True
-        return False        
+        return False

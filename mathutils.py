@@ -80,5 +80,3 @@ def line_intersect_test(p1, p2, p3, p4):
 
 def area(p1, p2, p3):
     return (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p3[0] - p1[0]) * (p2[1] - p1[1])
-
-print(line_intersect_test((300, 124), (200, 186),(238, 262), (238, 131)))

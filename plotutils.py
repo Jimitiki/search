@@ -15,14 +15,13 @@ def draw_graph(graph, height):
         offset_pos_y = height - pos[1]
         for adj in node.adjacent:
             dx = adj.get_pos_x() - pos[0]
-            #plt.arrow(pos[0], pos[1], adj.get_pos_x() - pos[0], adj.get_pos_y() - pos[1], head_width = width / 40.0, head_length = width / 40.0)
             plt.arrow(pos[0], offset_pos_y, dx, -adj.get_pos_y() + pos[1])
 
 def draw_environment(env, height):
     for obstacle in env.get_obstacles():
         (p1, p2, p3, p4) = obstacle.get_rect()
         draw_square_from_vertices(p1, p2, p3, p4, "m", height)
-    
+
     draw_square_from_center(env.get_start(), 50, "y", height)
     draw_square_from_center(env.get_goal(), 50, "r", height)
 
@@ -41,4 +40,4 @@ def draw_square_from_vertices(p1, p2, p3, p4, color, height):
 
 def draw_path(path, height):
     for i in range(0, len(path) - 1):
-        plt.arrow(path[i][0], height - path[i][1], path[i + 1][0] - path[i][0], -path[i + 1][1] + path[i][1], ec="g")  
+        plt.arrow(path[i][0], height - path[i][1], path[i + 1][0] - path[i][0], -path[i + 1][1] + path[i][1], ec="g")

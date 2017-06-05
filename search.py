@@ -1,5 +1,5 @@
 from environment import environment, tag_obstacle
-#import commands
+import commands
 import rrt
 import a_star
 import sys
@@ -8,16 +8,17 @@ import mathutils
 from time import sleep
 import json
 
-json_data = open(".\config.json").read()
-markers = json.loads(json_data)
+#json_data = open(".\config.json").read()
+#markers = json.loads(json_data)
 
 ADDRESS = ("0.0.0.0", 55555)
 
-#commands.open_connection(ADDRESS)
+commands.open_connection(ADDRESS)
 
-#markers = commands.where_markers()
+markers = commands.where_markers()
 
-start_pos = markers["robot"]["center"]#commands.where_robot()["center"]
+#start_pos = markers["robot"]["center"]
+start_pos = commands.where_robot()["center"]
 end_pos = markers[str(sys.argv[2])]["center"]
 env = environment(start_pos, end_pos, 1000, 1600)
 
@@ -33,16 +34,14 @@ elif sys.argv[1] == "-rrt":
 else:
     exit()
 
-exit()
-"""
 for position in path:
-    print(position)
-    sleep(3)
     at_position = False
     while not at_position:
         robot_position = commands.where_robot()["center"]
         vector = (position[0] - robot_position[0], position[1] - robot_position[1])
         vector = mathutils.normalize(vector[0], vector[1])
-        at_position = robot.follow_vector(vector[0] * 8, vector[1] * 8, position)
+        at_position = robot.follow_vector(vector[0] * 6, vector[1] * 6, position)
 
-commands.close_connection()"""
+commands.set_speed(0, 0)
+
+commands.close_connection()

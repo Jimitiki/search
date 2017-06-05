@@ -1,5 +1,8 @@
 import math
 
+SIN_45 = math.sin(math.pi / 4)
+COS_45 = math.cos(math.pi / 4)
+
 def normalize(x, y):
     m = magnitude(x, y)
     if m == 0:
@@ -35,6 +38,9 @@ def distance(p1, p2):
 def move_point_towards_point(p1, p2, m):
     return move_point_along_vector(p1, (p1[0] - p2[0], p1[1] - p2[1]), m)
 
+def move_point_away_from_point(p1, p2, m):
+    return move_point_along_vector(p1, (-p1[0] + p2[0], -p1[1] + p2[1]), m)
+
 #displaces the given point p1 towards point p2 by magnitude m and returns the resulting point
 def move_point_along_vector(p, v, m):
     n_vector = normalize(v[0], v[1])
@@ -54,3 +60,9 @@ def build_rect_from_line(p1, p2, w):
     r4 = move_point_along_vector(p1, v2, w / 2)
 
     return (r1, r2, r3, r4)
+
+def rotate_vector_45(v):
+    return (v[0] * COS_45 - v[1] * SIN_45, v[0] * SIN_45 + v[1] * COS_45)
+
+def rotate_vector_180(v):
+    return (-v[0], -v[1])

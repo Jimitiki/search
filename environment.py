@@ -44,23 +44,28 @@ def poly_intersection(poly1, poly2):
 
     return False
 
-def approx_intersect(line, rect):
-    return (intersect(line[0], line[1], rect[0], rect[1])
-        and intersect(line[0], line[1], rect[1], rect[2])
-        and intersect(line[0], line[1], rect[2], rect[3])
-        and intersect(line[0], line[1], rect[3], rect[0])
-
 class tag_obstacle:
-    def __init__(self, rect):
-        self.rect = rect
+    def __init__(self, marker):
+        SIZE_INCREASE = 60
+        vector = marker["orientation"]
+        corners = marker["corners"]
+        center = marker["center"]
+        p1 = mathutils.move_point_away_from_point(corners[0], center, SIZE_INCREASE)
+        p2 = mathutils.move_point_away_from_point(corners[1], center, SIZE_INCREASE)
+        p3 = mathutils.move_point_away_from_point(corners[2], center, SIZE_INCREASE)
+        p4 = mathutils.move_point_away_from_point(corners[3], center, SIZE_INCREASE)
+        self.rect = (p1, p2, p3, p4)
+
+    def get_rect(self):
+        return self.rect
 
     #def intersects(self, rect):
-    def intersects(self, line1, line2, line3):
-        return (approx_intersect(line1, self.rect)
-            and approx_intersect(line2, self.rect)
-            and approx_intersect(line3, self.rect))
+    def intersects(self, line):
+        return (mathutils.line_intersect_test(line[0], line[1], self.rect[0], self.rect[1])
+                or mathutils.line_intersect_test(line[0], line[1], self.rect[1], self.rect[2])
+                or mathutils.line_intersect_test(line[0], line[1], self.rect[2], self.rect[3])
+                or mathutils.line_intersect_test(line[0], line[1], self.rect[3], self.rect[0]))
 
-<<<<<<< HEAD
     def contains(self, x, y):
         return point_in_polygon((x, y), self.rect)
 
@@ -81,6 +86,9 @@ class environment:
     def get_dimensions(self):
         return (self.width, self.height)
 
+    def get_obstacles(self):
+        return self.obstacles
+
     def add_obstacle(self, obstacle):
         self.obstacles.append(obstacle)
 
@@ -91,8 +99,7 @@ class environment:
         return False
 
     def intersects_obstacle(self, start_x, start_y, end_x, end_y):
-        rect = mathutils.build_rect_from_line((start_x, start_y), (end_x, end_y), 40)
         for obstacle in self.obstacles:
-            if obstacle.intersects([(start_x, start_y), (end_x, end_y)],[rect[0], rect[1]], [rect[2], rect[3]]):
+            if obstacle.intersects([(start_x, start_y), (end_x, end_y)]):
                 return True
         return False
